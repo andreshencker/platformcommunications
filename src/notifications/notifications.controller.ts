@@ -1,17 +1,37 @@
-import { Body, Controller, Post } from '@nestjs/common';
+// src/notifications/notifications.controller.ts
+import {
+  Body,
+  Controller,
+  Headers,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { NotificationsService } from './notifications.service';
 import { NotifyEventDto } from './dto/notify-event.dto';
-import { NotificationResultDto } from './dto/notification-result.dto';
+import { ConfigService } from '@nestjs/config';
 
+@ApiTags('Notifications')
 @Controller('notifications')
 export class NotificationsController {
-    constructor(private readonly notifications: NotificationsService) {}
+  constructor(
+    private readonly notificationsService: NotificationsService,
+    private readonly config: ConfigService,
+  ) {}
 
-    // Endpoint genérico para probar un evento
-    @Post('event')
-    async notifyEvent(
-        @Body() dto: NotifyEventDto,
-    ): Promise<NotificationResultDto[]> {
-        return this.notifications.notify(dto);
+  @Post('notify')
+  @ApiOperation({ summary: 'Disparar una notificación genérica' })
+  @ApiBody({ type: NotifyEventDto })
+  async notify(
+    @Headers('x-api-key') apiKey: string,
+    @Body() dto: NotifyEventDto,
+  ) {
+    const expectedKey = this.config.get<string>('COMMUNICATION_API_KEY');
+
+    if (!apiKey || apiKey !== expectedKey) {
+      throw new UnauthorizedException('Invalid API key');
     }
+
+    return this.notificationsService.notify(dto);
+  }
 }
