@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Your admin account is ready</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.5;">
+<div style="max-width: 600px; margin: 0 auto; padding: 16px;">
+    <h1 style="color: #222;">Hi {{firstName}},</h1>
+
+    <p>
+        Your <strong>administrator account</strong> has been created in
+        <strong>JTrade</strong>.
+    </p>
+
+    <p>You can sign in using these credentials:</p>
+
+    <table
+            cellspacing="0"
+            cellpadding="8"
+            style="
+          border-collapse: collapse;
+          margin-top: 8px;
+          margin-bottom: 16px;
+          border: 1px solid #ddd;
+        "
+    >
+        <tr>
+            <td style="border: 1px solid #ddd; font-weight: bold;">Email</td>
+            <td style="border: 1px solid #ddd;">{{email}}</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid #ddd; font-weight: bold;">Password</td>
+            <td style="border: 1px solid #ddd;">{{password}}</td>
+        </tr>
+    </table>
+
+    <p>
+        You can log in here:
+        <a
+                href="http://localhost:5173/login"
+                style="color: #2563eb; text-decoration: none; font-weight: bold;"
+        >Go to login page</a
+        >
+    </p>
+
+    <p style="margin-top: 16px;">
+        For security reasons, we strongly recommend that you
+        <strong>change your password</strong> after your first login.
+    </p>
+
+    <p style="font-size: 12px; color: #666; margin-top: 24px;">
+        If you did not expect this email, please contact your system
+        administrator.
+    </p>
+</div>
+</body>
+</html>
